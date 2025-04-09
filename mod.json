@@ -1,0 +1,9 @@
+{
+  "id": "geocheats",
+  "name": "GeoCheats",
+  "version": "1.0.0",
+  "developer": "loub7702",
+  "description": "A spicy cheat mod menu for Geometry Dash.",
+  "gameVersion": "2.2",
+  "geode": "4.3.1"
+}
