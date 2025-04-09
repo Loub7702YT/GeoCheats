@@ -2,30 +2,44 @@ name: Build GeoCheats Mod
 
 on:
   push:
-    branches: [main]
-  workflow_dispatch:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
 
 jobs:
   build:
     runs-on: ubuntu-latest
 
     steps:
-    - name: 📥 Checkout Code
-      uses: actions/upload-artifact@e3f369dde6c7bb8b7c6c86b5edc2e3c9d7b5f50a
+      # Step 1: Checkout the code
+      - name: Checkout Code
+        uses: actions/checkout@v3
 
+      # Step 2: Set up Geode SDK
+      - name: Set up Geode SDK
+        run: |
+          # Install dependencies for building Geode mods
+          sudo apt update
+          sudo apt install -y cmake g++ git
+          
+          # Download Geode SDK and set it up (adjust version as needed)
+          git clone https://github.com/GeoModding/Geode.git geode
+          cd geode
+          git checkout <your-geode-sdk-branch>
 
-    - name: 🛠️ Install Dependencies
-      run: |
-        sudo apt update
-        sudo apt install -y cmake g++ git
+      # Step 3: Build the mod
+      - name: Build GeoCheats Mod
+        run: |
+          mkdir -p build
+          cd build
+          cmake ..
+          cmake --build . --config RelWithDebInfo
 
-    - name: ⚙️ Configure & Build
-      run: |
-        cmake -S . -B build
-        cmake --build build
-
-    - name: 📦 Upload .geode Mod
-      uses: actions/upload-artifact@e3f369dde6c7bb8b7c6c86b5edc2e3c9d7b5f50a
-      with:
-        name: GeoCheats.geode
-        path: build/dist/*.geode
+      # Step 4: Upload the mod file as an artifact
+      - name: Upload GeoCheats Artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: GeoCheats.geode
+          path: build/GeoCheats.geode
