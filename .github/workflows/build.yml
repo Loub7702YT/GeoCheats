@@ -1,0 +1,32 @@
+name: Build GeoCheats Mod
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: 📥 Checkout Code
+      uses: actions/checkout@v3
+
+    - name: 🛠️ Install Dependencies
+      run: |
+        sudo apt update
+        sudo apt install -y cmake g++ git
+
+    - name: ⚙️ Configure & Build
+      run: |
+        cmake -S . -B build
+        cmake --build build
+
+    - name: 📦 Archive .geode Mod
+      uses: actions/upload-artifact@v3
+      with:
+        name: GeoCheats.geode
+        path: build/dist/*.geode
