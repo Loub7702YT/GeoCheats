@@ -3,8 +3,6 @@ name: Build GeoCheats Mod
 on:
   push:
     branches: [main]
-  pull_request:
-    branches: [main]
   workflow_dispatch:
 
 jobs:
@@ -13,7 +11,7 @@ jobs:
 
     steps:
     - name: 📥 Checkout Code
-      uses: actions/checkout@v3.5.2
+      uses: actions/checkout@v3
 
     - name: 🛠️ Install Dependencies
       run: |
@@ -25,8 +23,8 @@ jobs:
         cmake -S . -B build
         cmake --build build
 
-    - name: 📦 Archive .geode Mod
-      uses: actions/upload-artifact@v3.1.3
+    - name: 📦 Upload .geode Mod
+      uses: actions/upload-artifact@v3
       with:
         name: GeoCheats.geode
         path: build/dist/*.geode
