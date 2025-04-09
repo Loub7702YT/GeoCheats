@@ -39,7 +39,7 @@ jobs:
 
       # Step 4: Upload the mod file as an artifact
       - name: Upload GeoCheats Artifact
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           name: GeoCheats.geode
           path: build/GeoCheats.geode
